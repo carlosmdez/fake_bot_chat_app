@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
+import 'package:yes_no_app/providers/chat_provider.dart';
 import 'package:yes_no_app/widgets/chat/message_bubble.dart';
 import 'package:yes_no_app/widgets/chat/user_message_bubble.dart';
 import 'package:yes_no_app/widgets/shared/message_input.dart';
@@ -28,6 +31,8 @@ class ChatScreen extends StatelessWidget {
 class _ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final chatProvider = context.watch<ChatProvider>();
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -35,15 +40,20 @@ class _ChatView extends StatelessWidget {
           children: [
             Expanded(
                 child: ListView.builder(
-              itemCount: 20,
+              itemCount: chatProvider.messagesList.length,
               itemBuilder: (context, index) {
-                if (index % 2 == 0) {
-                  return const UserMessageBubble();
+                final message = chatProvider.messagesList[index];
+                if (message.userType == UserType.sender) {
+                  return UserMessageBubble(message: message.text);
                 }
-                return const MessageBubble();
+                return MessageBubble(message: message.text);
               },
             )),
-            const MessageInpt()
+            MessageInpt(
+              // Cuando los argumentos de una función son los mismos que los de la función que se llama, se puede usar el nombre de la función en lugar de la función anónima
+              // onSubmitted: (text) => chatProvider.sendMessage(text),
+              onSubmitted: chatProvider.sendMessage,
+            )
           ],
         ),
       ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UserMessageBubble extends StatelessWidget {
-  const UserMessageBubble({super.key});
+  final String message;
+  const UserMessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,11 @@ class UserMessageBubble extends StatelessWidget {
             color: colors.primary,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              'Hola, soy la otra persona',
-              style: TextStyle(color: Colors.white),
+              message,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -42,7 +43,7 @@ class _ImageBubble extends StatelessWidget {
         child: Image.network(
           'https://i.pinimg.com/originals/0c/96/49/0c9649f0a491373305b741c3be3d35cc.gif',
           width: size.width * 0.6,
-          height: 150,
+          height: 100,
           fit: BoxFit.cover,
           loadingBuilder: (context, child, loadingProgress) {
             if (loadingProgress == null) {
@@ -50,7 +51,7 @@ class _ImageBubble extends StatelessWidget {
             }
             return Container(
                 width: size.width * 0.6,
-                height: 150,
+                height: 100,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: const Text('Cargando...'));

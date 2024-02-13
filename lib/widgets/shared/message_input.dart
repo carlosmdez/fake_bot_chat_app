@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MessageInpt extends StatelessWidget {
-  const MessageInpt({super.key});
+  final ValueChanged<String> onSubmitted;
+  const MessageInpt({super.key, required this.onSubmitted});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,8 @@ class MessageInpt extends StatelessWidget {
         icon: const Icon(Icons.send_rounded),
         onPressed: () {
           final textValue = textController.value.text;
-          print('Send message: $textValue');
           textController.clear();
+          onSubmitted(textValue);
         },
       ),
     );
@@ -38,9 +39,9 @@ class MessageInpt extends StatelessWidget {
         focusNode.unfocus();
       },
       onFieldSubmitted: (value) {
-        print('Submit value: $value');
         textController.clear();
         focusNode.requestFocus();
+        onSubmitted(value);
       },
     );
   }
