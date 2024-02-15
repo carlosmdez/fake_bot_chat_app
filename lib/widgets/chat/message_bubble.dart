@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class MessageBubble extends StatelessWidget {
-  final String message;
+  final Message message;
 
   const MessageBubble({super.key, required this.message});
 
@@ -20,7 +21,7 @@ class MessageBubble extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              message,
+              message.text,
               style: const TextStyle(color: Colors.white),
             ),
           ),

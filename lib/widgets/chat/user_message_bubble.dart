@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/domain/entities/message.dart';
 
 class UserMessageBubble extends StatelessWidget {
-  final String message;
-  const UserMessageBubble({super.key, required this.message});
+  final Message message;
+
+  const UserMessageBubble({
+    super.key,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +24,13 @@ class UserMessageBubble extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Text(
-              message,
+              message.text,
               style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
         const SizedBox(height: 8),
-        // TODO: Imagen
-        _ImageBubble(),
+        _ImageBubble(imageUrl: message.imageUrl!),
         const SizedBox(height: 8),
       ],
     );
@@ -34,6 +38,9 @@ class UserMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+  final String imageUrl;
+
+  const _ImageBubble({required this.imageUrl});
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -41,7 +48,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-          'https://i.pinimg.com/originals/0c/96/49/0c9649f0a491373305b741c3be3d35cc.gif',
+          imageUrl,
           width: size.width * 0.6,
           height: 100,
           fit: BoxFit.cover,
